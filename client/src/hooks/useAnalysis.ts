@@ -138,7 +138,8 @@ export function useAnalysis() {
         company,
       });
 
-      const url = `/api/analyze?company=${encodeURIComponent(company)}`;
+      const apiBase = import.meta.env.VITE_API_BASE_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : 'http://localhost:3001');
+      const url = `${apiBase}/api/analyze?company=${encodeURIComponent(company)}`;
       const es = new EventSource(url);
       esRef.current = es;
 
