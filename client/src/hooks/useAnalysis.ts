@@ -138,7 +138,10 @@ export function useAnalysis() {
         company,
       });
 
-      const apiBase = import.meta.env.VITE_API_BASE_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : 'http://localhost:3001');
+      const savedBase = localStorage.getItem('VITE_API_BASE_URL');
+      const apiBase = savedBase !== null 
+        ? savedBase 
+        : (import.meta.env.VITE_API_BASE_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : 'http://localhost:3001'));
       const url = `${apiBase}/api/analyze?company=${encodeURIComponent(company)}`;
       const es = new EventSource(url);
       esRef.current = es;

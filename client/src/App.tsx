@@ -399,6 +399,21 @@ const AnalysisApp: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [modalTab, setModalTab] = useState<'logs' | 'risks' | 'news'>('logs');
   const [isHistoryOpen, setIsHistoryOpen] = useState(true);
+  const [isSettingsOpen, setIsSettingsOpen] = useState(false);
+  const [apiUrl, setApiUrl] = useState(() => {
+    return localStorage.getItem('VITE_API_BASE_URL') || '';
+  });
+
+  const handleSaveSettings = (e: React.FormEvent) => {
+    e.preventDefault();
+    const url = apiUrl.trim();
+    if (url) {
+      localStorage.setItem('VITE_API_BASE_URL', url);
+    } else {
+      localStorage.removeItem('VITE_API_BASE_URL');
+    }
+    setIsSettingsOpen(false);
+  };
 
   // Auto-open modal on stream start
   useEffect(() => {
@@ -512,6 +527,14 @@ ${scoresMd}
             </div>
           )}
           <button
+            onClick={() => setIsSettingsOpen(prev => !prev)}
+            className="btn-log-toggle"
+            title="Configure Backend Connection"
+            style={{ marginRight: 8, background: '#1c1c24', border: '1px solid #3c3c4e' }}
+          >
+            ⚙️ Connection
+          </button>
+          <button
             onClick={() => setIsModalOpen(true)}
             className={`btn-log-toggle ${isStreaming ? 'pulse-glowing' : ''}`}
             title="View Agent Activity & Details"
@@ -525,6 +548,44 @@ ${scoresMd}
           )}
         </div>
       </header>
+
+      {isSettingsOpen && (
+        <div className="connection-settings-bar anim-fade-in" style={{
+          background: 'var(--card-bg)',
+          borderBottom: '1px solid var(--border)',
+          padding: '12px 24px',
+          display: 'flex',
+          alignItems: 'center',
+          gap: '16px',
+          justifyContent: 'space-between',
+          flexWrap: 'wrap'
+        }}>
+          <form onSubmit={handleSaveSettings} style={{ display: 'flex', alignItems: 'center', gap: '12px', width: '100%', maxWidth: '800px', flex: 1 }}>
+            <span style={{ fontSize: '12px', color: 'var(--text-2)', whiteSpace: 'nowrap' }}>⚙️ API Server URL:</span>
+            <input
+              type="text"
+              placeholder="e.g. http://localhost:3001 or https://xxxx.ngrok-free.app (leave blank for Auto-resolve)"
+              value={apiUrl}
+              onChange={e => setApiUrl(e.target.value)}
+              style={{
+                flex: 1,
+                background: 'rgba(0,0,0,0.2)',
+                border: '1px solid var(--border)',
+                borderRadius: '6px',
+                padding: '6px 12px',
+                color: 'var(--text-1)',
+                fontSize: '13px',
+                minWidth: '200px'
+              }}
+            />
+            <button type="submit" className="export-btn" style={{ margin: 0, padding: '6px 14px' }}>Save</button>
+            <button type="button" onClick={() => { setApiUrl(''); localStorage.removeItem('VITE_API_BASE_URL'); setIsSettingsOpen(false); }} className="export-btn" style={{ margin: 0, padding: '6px 14px', background: 'transparent', border: '1px solid transparent' }}>Reset</button>
+          </form>
+          <span style={{ fontSize: '11px', color: 'var(--text-3)', textAlign: 'right' }}>
+            To run locally, run <code>npm run dev</code> in <code>/server</code> and open <code>http://localhost:5173</code>
+          </span>
+        </div>
+      )}
 
       {/* ── BODY ── */}
       <div className="app-body">
