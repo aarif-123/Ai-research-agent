@@ -1,0 +1,33 @@
+{
+  "name": "investment-agent-server",
+  "version": "1.0.0",
+  "description": "AI Investment Research Agent Backend",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "tsx watch src/index.ts",
+    "test-run": "tsx src/test-run.ts"
+  },
+  "dependencies": {
+    "@langchain/core": "^0.3.45",
+    "@langchain/groq": "^0.2.3",
+    "@langchain/langgraph": "^0.2.65",
+    "@tavily/core": "^0.7.6",
+    "axios": "^1.7.9",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "uuid": "^11.1.0",
+    "yahoo-finance2": "^3.15.3",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@types/cors": "^2.8.17",
+    "@types/express": "^5.0.0",
+    "@types/node": "^22.12.0",
+    "@types/uuid": "^10.0.0",
+    "tsx": "^4.19.2",
+    "typescript": "^5.7.3"
+  }
+}

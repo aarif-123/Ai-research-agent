@@ -1,0 +1,339 @@
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:var(--font-sans);font-size:13px;color:var(--color-text-primary);line-height:1.5}
+h2.sr-only{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0,0,0,0)}
+
+.page{display:flex;flex-direction:column;gap:0}
+
+.seg-header{padding:10px 0 6px;border-bottom:0.5px solid var(--color-border-tertiary);margin-bottom:16px;display:flex;align-items:center;gap:8px}
+.seg-header i{font-size:16px;color:var(--color-text-secondary)}
+.seg-title{font-size:11px;font-weight:500;letter-spacing:.09em;text-transform:uppercase;color:var(--color-text-secondary)}
+.seg-badge{margin-left:auto;font-size:10px;padding:2px 8px;border-radius:4px;font-weight:500;letter-spacing:.04em}
+.sb-core{background:var(--color-background-info);color:var(--color-text-info)}
+.sb-agent{background:var(--color-background-success);color:var(--color-text-success)}
+.sb-premium{background:var(--color-background-warning);color:var(--color-text-warning)}
+
+.feat-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(0,1fr));gap:10px;margin-bottom:20px}
+.feat-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-lg);padding:14px 14px 12px}
+.feat-card:hover{border-color:var(--color-border-secondary)}
+.fc-icon{font-size:20px;color:var(--color-text-secondary);margin-bottom:8px}
+.fc-name{font-size:13px;font-weight:500;color:var(--color-text-primary);margin-bottom:4px}
+.fc-desc{font-size:11px;color:var(--color-text-secondary);line-height:1.55}
+.fc-tag{display:inline-block;margin-top:8px;font-size:10px;padding:2px 7px;border-radius:3px;font-weight:500}
+.tag-sse{background:var(--color-background-info);color:var(--color-text-info)}
+.tag-lg{background:var(--color-background-success);color:var(--color-text-success)}
+.tag-ui{background:var(--color-background-warning);color:var(--color-text-warning)}
+.tag-api{background:var(--color-background-secondary);color:var(--color-text-secondary);border:0.5px solid var(--color-border-tertiary)}
+
+.agent-flow{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:16px;margin-bottom:20px}
+.flow-row{display:flex;align-items:stretch;gap:0;margin-bottom:10px}
+.flow-row:last-child{margin-bottom:0}
+.flow-node{flex:1;background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 12px;position:relative}
+.fn-label{font-size:10px;font-weight:500;letter-spacing:.06em;text-transform:uppercase;color:var(--color-text-tertiary);margin-bottom:3px}
+.fn-name{font-size:12px;font-weight:500;color:var(--color-text-primary);margin-bottom:3px}
+.fn-detail{font-size:11px;color:var(--color-text-secondary);line-height:1.45}
+.fn-emit{font-size:10px;margin-top:6px;padding:2px 7px;border-radius:3px;display:inline-block;background:var(--color-background-success);color:var(--color-text-success)}
+.arrow-col{width:28px;display:flex;align-items:center;justify-content:center;flex-shrink:0;color:var(--color-text-tertiary);font-size:16px}
+.flow-tools{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:20px}
+.tool-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:10px 11px}
+.tool-card.tier2{border-style:dashed}
+.tc-icon{font-size:15px;color:var(--color-text-secondary);margin-bottom:5px}
+.tc-name{font-size:11px;font-weight:500;color:var(--color-text-primary);margin-bottom:2px}
+.tc-src{font-size:10px;color:var(--color-text-tertiary)}
+
+.state-schema{background:var(--color-background-secondary);border-radius:var(--border-radius-lg);padding:14px 16px;margin-bottom:20px;font-family:var(--font-mono);font-size:11px;line-height:1.9;color:var(--color-text-secondary)}
+.sk{color:var(--color-text-info)}.sv{color:var(--color-text-success)}.sc{color:var(--color-text-tertiary)}.sn{color:var(--color-text-primary);font-weight:500}
+
+.prompt-table{width:100%;border-collapse:collapse;margin-bottom:20px;font-size:12px}
+.prompt-table th{text-align:left;padding:8px 12px;font-size:10px;font-weight:500;letter-spacing:.07em;text-transform:uppercase;color:var(--color-text-tertiary);border-bottom:0.5px solid var(--color-border-tertiary)}
+.prompt-table td{padding:9px 12px;border-bottom:0.5px solid var(--color-border-tertiary);vertical-align:top}
+.prompt-table tr:last-child td{border-bottom:none}
+.prompt-table td:first-child{color:var(--color-text-secondary);font-weight:500;white-space:nowrap;width:110px}
+.prompt-table td:nth-child(2){color:var(--color-text-secondary);font-size:11px;width:90px}
+.prompt-table td:last-child{color:var(--color-text-primary);font-size:11px;line-height:1.5}
+.node-pill{display:inline-block;padding:1px 7px;border-radius:3px;font-size:10px;font-weight:500}
+.np-plan{background:var(--color-background-info);color:var(--color-text-info)}
+.np-res{background:var(--color-background-success);color:var(--color-text-success)}
+.np-syn{background:var(--color-background-warning);color:var(--color-text-warning)}
+.np-ver{background:var(--color-background-danger);color:var(--color-text-danger)}
+
+.tradeoffs{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-bottom:20px}
+.to-card{background:var(--color-background-primary);border:0.5px solid var(--color-border-tertiary);border-radius:var(--border-radius-md);padding:12px 14px}
+.to-head{display:flex;align-items:center;gap:7px;margin-bottom:8px}
+.to-head i{font-size:15px}
+.to-title{font-size:12px;font-weight:500;color:var(--color-text-primary)}
+.to-item{font-size:11px;color:var(--color-text-secondary);padding:3px 0;display:flex;gap:6px;align-items:flex-start}
+.to-item::before{content:'·';color:var(--color-text-tertiary);flex-shrink:0;margin-top:1px}
+
+.readme-rows{display:flex;flex-direction:column;gap:8px;margin-bottom:16px}
+.rr{display:flex;gap:10px;align-items:flex-start;padding:10px 12px;background:var(--color-background-secondary);border-radius:var(--border-radius-md)}
+.rr-num{font-size:10px;font-weight:500;color:var(--color-text-tertiary);font-family:var(--font-mono);width:20px;flex-shrink:0;padding-top:1px}
+.rr-section{font-size:11px;font-weight:500;color:var(--color-text-primary);width:110px;flex-shrink:0}
+.rr-content{font-size:11px;color:var(--color-text-secondary);line-height:1.55}
+
+.section{padding:0 0 4px}
+</style>
+
+<h2 class="sr-only">Production-grade AI Investment Research Agent — complete product spec covering features, agentic architecture, LangGraph state, prompt engineering, tool inventory, and trade-offs.</h2>
+
+<div class="page">
+
+<div class="section">
+<div class="seg-header">
+  <i class="ti ti-layout-dashboard" aria-hidden="true"></i>
+  <span class="seg-title">Core product features</span>
+  <span class="seg-badge sb-core">MVP delivery</span>
+</div>
+<div class="feat-grid" style="grid-template-columns:repeat(3,1fr)">
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-search" aria-hidden="true"></i></div>
+    <div class="fc-name">Universal company search</div>
+    <div class="fc-desc">Accepts ticker (AAPL), full name (Apple Inc.), or partial name. Resolves via Yahoo Finance autocomplete. Validates before dispatching agent.</div>
+    <span class="fc-tag tag-api">yahoo-finance2</span>
+  </div>
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-terminal-2" aria-hidden="true"></i></div>
+    <div class="fc-name">Live agent thought stream</div>
+    <div class="fc-desc">Every LangGraph node emits timestamped SSE events. Frontend renders a live monospace log: PLAN → TOOL → SYNTH → VERDICT in real time.</div>
+    <span class="fc-tag tag-sse">SSE streaming</span>
+  </div>
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-circle-dot" aria-hidden="true"></i></div>
+    <div class="fc-name">Animated verdict orb</div>
+    <div class="fc-desc">Verdict circle transitions gray → green/red/amber with score 0–100. CSS keyframe animation triggered on final SSE event. The centrepiece of the UI.</div>
+    <span class="fc-tag tag-ui">React state</span>
+  </div>
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-chart-bar" aria-hidden="true"></i></div>
+    <div class="fc-name">7-factor score breakdown</div>
+    <div class="fc-desc">Fundamentals, growth, valuation, sentiment, moat, risk, management — each scored 0–100 by the Synthesis node and rendered as animated bar charts.</div>
+    <span class="fc-tag tag-lg">LangGraph output</span>
+  </div>
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-alert-triangle" aria-hidden="true"></i></div>
+    <div class="fc-name">Risk factor extraction</div>
+    <div class="fc-desc">Agent identifies and categorises risk vectors (geopolitical, regulatory, valuation, competitive) with severity badges. Structured JSON from Synthesis node.</div>
+    <span class="fc-tag tag-lg">LangGraph output</span>
+  </div>
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-news" aria-hidden="true"></i></div>
+    <div class="fc-name">News sentiment panel</div>
+    <div class="fc-desc">Top 4 recent news items with positive/neutral/negative tone scores. Colour-coded left stripe. Raw tone float from LLM sentiment tool shown per headline.</div>
+    <span class="fc-tag tag-api">Tavily + LLM</span>
+  </div>
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-file-text" aria-hidden="true"></i></div>
+    <div class="fc-name">Grounded rationale</div>
+    <div class="fc-desc">Full-paragraph invest/pass/hold rationale citing specific metrics. Structured output from Verdict node. Left-accented in verdict colour.</div>
+    <span class="fc-tag tag-lg">Structured output</span>
+  </div>
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-clock" aria-hidden="true"></i></div>
+    <div class="fc-name">Run history sidebar</div>
+    <div class="fc-desc">All past analyses persist in localStorage keyed by ticker. One-click re-load of any prior verdict. Verdict dots (green/red/amber) for instant scanning.</div>
+    <span class="fc-tag tag-ui">localStorage</span>
+  </div>
+  <div class="feat-card">
+    <div class="fc-icon"><i class="ti ti-download" aria-hidden="true"></i></div>
+    <div class="fc-name">Export report</div>
+    <div class="fc-desc">One-click download of full analysis as formatted JSON or Markdown. Includes all factor scores, risk flags, news, and rationale. Zero backend needed.</div>
+    <span class="fc-tag tag-ui">Client-side</span>
+  </div>
+</div>
+</div>
+
+<div class="section">
+<div class="seg-header">
+  <i class="ti ti-topology-star" aria-hidden="true"></i>
+  <span class="seg-title">LangGraph agent pipeline — execution order</span>
+  <span class="seg-badge sb-agent">StateGraph</span>
+</div>
+<div class="agent-flow">
+  <div class="flow-row">
+    <div class="flow-node" style="border-color:var(--color-border-info)">
+      <div class="fn-label">Node 1 — entry</div>
+      <div class="fn-name">Planner</div>
+      <div class="fn-detail">Resolves company name to ticker + full name. Emits a structured research plan: 6 sub-questions covering financials, news, filings, sentiment, competitors, risk.</div>
+      <span class="fn-emit">emits: plan_ready</span>
+    </div>
+    <div class="arrow-col"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+    <div class="flow-node" style="border-color:var(--color-border-success)">
+      <div class="fn-label">Node 2 — parallel</div>
+      <div class="fn-name">Research</div>
+      <div class="fn-detail">Fans out to all 8 tools via Promise.allSettled. Each successful tool result is appended to state.toolResults[]. Failed tools log a warning and continue.</div>
+      <span class="fn-emit">emits: tool_result (×8)</span>
+    </div>
+    <div class="arrow-col"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+    <div class="flow-node" style="border-color:var(--color-border-warning)">
+      <div class="fn-label">Node 3 — aggregation</div>
+      <div class="fn-name">Synthesis</div>
+      <div class="fn-detail">LLM call over all tool results. Outputs structured JSON: 7 factor scores, risk[] array with severity, news[] with tone, key_metrics{} object.</div>
+      <span class="fn-emit">emits: synthesis_done</span>
+    </div>
+    <div class="arrow-col"><i class="ti ti-arrow-right" aria-hidden="true"></i></div>
+    <div class="flow-node" style="border-color:var(--color-border-danger)">
+      <div class="fn-label">Node 4 — terminal</div>
+      <div class="fn-name">Verdict</div>
+      <div class="fn-detail">Reasons over synthesis JSON. Outputs verdict (INVEST/PASS/HOLD), confidence score 0–100, one-paragraph rationale, and position_sizing note.</div>
+      <span class="fn-emit">emits: verdict_final</span>
+    </div>
+  </div>
+</div>
+
+<div class="flow-tools">
+  <div class="tool-card">
+    <div class="tc-icon"><i class="ti ti-currency-dollar" aria-hidden="true"></i></div>
+    <div class="tc-name">Yahoo Finance</div>
+    <div class="tc-src">price · P/E · revenue · margins</div>
+  </div>
+  <div class="tool-card">
+    <div class="tc-icon"><i class="ti ti-search" aria-hidden="true"></i></div>
+    <div class="tc-name">Tavily search</div>
+    <div class="tc-src">recent news · earnings calls</div>
+  </div>
+  <div class="tool-card">
+    <div class="tc-icon"><i class="ti ti-file-description" aria-hidden="true"></i></div>
+    <div class="tc-name">SEC EDGAR</div>
+    <div class="tc-src">10-K · 10-Q · risk sections</div>
+  </div>
+  <div class="tool-card">
+    <div class="tc-icon"><i class="ti ti-building-bank" aria-hidden="true"></i></div>
+    <div class="tc-name">Ratio calculator</div>
+    <div class="tc-src">ROE · D/E · P/B · ROA</div>
+  </div>
+  <div class="tool-card tier2">
+    <div class="tc-icon"><i class="ti ti-mood-smile" aria-hidden="true"></i></div>
+    <div class="tc-name">Sentiment tool</div>
+    <div class="tc-src">LLM tone scoring on news</div>
+  </div>
+  <div class="tool-card tier2">
+    <div class="tc-icon"><i class="ti ti-tournament" aria-hidden="true"></i></div>
+    <div class="tc-name">Competitor map</div>
+    <div class="tc-src">LLM peer identification</div>
+  </div>
+  <div class="tool-card tier2">
+    <div class="tc-icon"><i class="ti ti-shield" aria-hidden="true"></i></div>
+    <div class="tc-name">Risk scorer</div>
+    <div class="tc-src">macro · sector · geopolitical</div>
+  </div>
+  <div class="tool-card tier2">
+    <div class="tc-icon"><i class="ti ti-trending-up" aria-hidden="true"></i></div>
+    <div class="tc-name">Moat analyser</div>
+    <div class="tc-src">LLM competitive advantages</div>
+  </div>
+</div>
+<div style="font-size:11px;color:var(--color-text-tertiary);margin-bottom:20px">Solid border = external API call · dashed border = LLM-powered computation tool</div>
+</div>
+
+<div class="section">
+<div class="seg-header">
+  <i class="ti ti-code" aria-hidden="true"></i>
+  <span class="seg-title">LangGraph state object — typed schema</span>
+  <span class="seg-badge sb-agent">TypeScript</span>
+</div>
+<div class="state-schema">
+<span class="sc">// AgentState — flows through every node, append-only</span><br>
+{<br>
+&nbsp;&nbsp;<span class="sk">company</span>: <span class="sv">string</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// "Apple Inc." or "AAPL"</span><br>
+&nbsp;&nbsp;<span class="sk">ticker</span>: <span class="sv">string</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// resolved by Planner</span><br>
+&nbsp;&nbsp;<span class="sk">plan</span>: <span class="sv">string[]</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// 6 sub-questions</span><br>
+&nbsp;&nbsp;<span class="sk">toolResults</span>: <span class="sv">ToolResult[]</span>,&nbsp;&nbsp;&nbsp;<span class="sc">// { tool, data, error? }</span><br>
+&nbsp;&nbsp;<span class="sk">evidence</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sk">scores</span>: <span class="sv">Record&lt;Factor, number&gt;</span>,&nbsp;<span class="sc">// 7 factors 0-100</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sk">risks</span>: <span class="sv">Risk[]</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// { label, severity, desc }</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sk">news</span>: <span class="sv">NewsItem[]</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// { headline, tone, source }</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sk">keyMetrics</span>: <span class="sv">KeyMetrics</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// price, PE, revenue, margin</span><br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;<span class="sk">verdict</span>: {<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sk">decision</span>: <span class="sv">'INVEST'|'PASS'|'HOLD'</span>,<br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sk">score</span>: <span class="sv">number</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// 0-100 confidence</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sk">rationale</span>: <span class="sv">string</span>,&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// full paragraph</span><br>
+&nbsp;&nbsp;&nbsp;&nbsp;<span class="sk">positionSizing</span>: <span class="sv">string</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// e.g. "moderate, hedge China"</span><br>
+&nbsp;&nbsp;},<br>
+&nbsp;&nbsp;<span class="sk">sessionId</span>: <span class="sv">string</span>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<span class="sc">// SSE stream key</span><br>
+}
+</div>
+</div>
+
+<div class="section">
+<div class="seg-header">
+  <i class="ti ti-prompt" aria-hidden="true"></i>
+  <span class="seg-title">Prompt engineering — per node</span>
+  <span class="seg-badge sb-premium">Critical</span>
+</div>
+<table class="prompt-table">
+  <thead>
+    <tr><th>Node</th><th>Output format</th><th>Key prompt directives</th></tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td><span class="node-pill np-plan">Planner</span></td>
+      <td>JSON string[]</td>
+      <td>Resolve ticker. Generate exactly 6 research questions covering: (1) financials, (2) growth narrative, (3) recent news, (4) SEC risk disclosures, (5) competitive position, (6) macro/sector context. Return only JSON array.</td>
+    </tr>
+    <tr>
+      <td><span class="node-pill np-res">Research</span></td>
+      <td>Tool calls</td>
+      <td>Tool dispatcher only — no LLM call. Use Promise.allSettled over all 8 tool functions. Partial failures are acceptable; log them as warnings in state.</td>
+    </tr>
+    <tr>
+      <td><span class="node-pill np-syn">Synthesis</span></td>
+      <td>Strict JSON</td>
+      <td>You are a senior equity analyst. Given raw tool data for {ticker}, produce a structured evidence object. Score each of 7 factors 0–100 with brief justification. Extract top 4 risks with LOW/MEDIUM/HIGH severity. Extract top 4 news items with tone float −1 to +1. Return only valid JSON matching the Evidence schema. Do not add commentary outside the JSON.</td>
+    </tr>
+    <tr>
+      <td><span class="node-pill np-ver">Verdict</span></td>
+      <td>Strict JSON</td>
+      <td>You are a portfolio manager at a top-tier fund. Given the evidence object, decide: INVEST if score ≥ 65 and no HIGH-severity risks dominate; HOLD if 45–64 or mixed signals; PASS if score &lt; 45 or structural red flags. Provide a confidence score 0–100, a 3–4 sentence rationale citing specific metrics, and a position sizing note. Return only JSON. Never hedge the verdict.</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+<div class="section">
+<div class="seg-header">
+  <i class="ti ti-scale" aria-hidden="true"></i>
+  <span class="seg-title">Key decisions and trade-offs</span>
+  <span class="seg-badge sb-premium">README section</span>
+</div>
+<div class="tradeoffs">
+  <div class="to-card">
+    <div class="to-head"><i class="ti ti-check" style="color:var(--color-text-success)" aria-hidden="true"></i><span class="to-title">Chosen — and why</span></div>
+    <div class="to-item">SSE over WebSockets: unidirectional, Vercel-native, zero extra infra</div>
+    <div class="to-item">LangGraph StateGraph over LangChain chain: explicit node boundaries, clean SSE emit points, conditional retry edges</div>
+    <div class="to-item">Yahoo Finance (free) as primary data: no API key friction for evaluators, sufficient for MVP scope</div>
+    <div class="to-item">Separate Synthesis + Verdict nodes: lets you A/B prompt the decision logic independently of data aggregation</div>
+    <div class="to-item">Promise.allSettled for tools: partial data beats full failure; graceful degradation</div>
+    <div class="to-item">Strict JSON output format on Synthesis/Verdict: predictable parsing, no hallucinated prose leaking into structured fields</div>
+  </div>
+  <div class="to-card">
+    <div class="to-head"><i class="ti ti-clock" style="color:var(--color-text-warning)" aria-hidden="true"></i><span class="to-title">Left out — would add with more time</span></div>
+    <div class="to-item">Redis caching of tool results (same ticker re-fetches unnecessarily)</div>
+    <div class="to-item">Historical backtesting: compare agent verdicts against actual 1-year returns</div>
+    <div class="to-item">PDF ingestion of annual reports (Tier 2 — needs PDF parsing + chunking)</div>
+    <div class="to-item">Rate-limit handling on free-tier APIs with exponential backoff</div>
+    <div class="to-item">Auth layer — currently single-user, no session isolation</div>
+    <div class="to-item">Comparable companies deep-dive: full peer-group financial comparison table</div>
+  </div>
+</div>
+</div>
+
+<div class="section">
+<div class="seg-header">
+  <i class="ti ti-book" aria-hidden="true"></i>
+  <span class="seg-title">README structure — 7 required sections</span>
+  <span class="seg-badge sb-core">Submission</span>
+</div>
+<div class="readme-rows">
+  <div class="rr"><span class="rr-num">01</span><span class="rr-section">Overview</span><span class="rr-content">What it does, the verdict mechanic, the tech stack. One paragraph + architecture diagram screenshot.</span></div>
+  <div class="rr"><span class="rr-num">02</span><span class="rr-section">How to run</span><span class="rr-content">npm install → .env setup (ANTHROPIC_API_KEY, TAVILY_API_KEY) → npm run dev. Vercel deploy link.</span></div>
+  <div class="rr"><span class="rr-num">03</span><span class="rr-section">How it works</span><span class="rr-content">LangGraph StateGraph with 4 nodes, 8 tools, SSE transport. Include the architecture diagram from this design session.</span></div>
+  <div class="rr"><span class="rr-num">04</span><span class="rr-section">Key decisions</span><span class="rr-content">SSE rationale, node separation, Yahoo Finance choice, strict JSON outputs, Promise.allSettled. All from the trade-offs above.</span></div>
+  <div class="rr"><span class="rr-num">05</span><span class="rr-section">Example runs</span><span class="rr-content">AAPL (INVEST), INTC (PASS), TSLA (HOLD) — include full verdict JSON + screenshot per run.</span></div>
+  <div class="rr"><span class="rr-num">06</span><span class="rr-section">What I'd improve</span><span class="rr-content">Redis cache, backtesting, PDF ingestion, rate-limit handling, auth. Frame as a roadmap, not a regret list.</span></div>
+  <div class="rr"><span class="rr-num">07</span><span class="rr-section">BONUS: LLM logs</span><span class="rr-content">Export this entire Claude chat session as the transcript. Include architecture diagrams, UI mockup, all design decisions. This is the bonus deliverable.</span></div>
+</div>
+</div>
+
+</div>
