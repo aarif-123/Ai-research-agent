@@ -138,10 +138,17 @@ export function useAnalysis() {
         company,
       });
 
+      const normalizeBaseUrl = (baseUrl: string) => {
+        const trimmed = baseUrl.trim().replace(/\/$/, '');
+        if (!trimmed) return '';
+        return /^https?:\/\//i.test(trimmed) ? trimmed : `https://${trimmed}`;
+      };
+
       const savedBase = localStorage.getItem('VITE_API_BASE_URL');
-      const apiBase = savedBase !== null 
+      const rawApiBase = savedBase !== null 
         ? savedBase 
         : (import.meta.env.VITE_API_BASE_URL || (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1' ? '' : 'http://localhost:3001'));
+      const apiBase = normalizeBaseUrl(rawApiBase);
       const url = `${apiBase}/api/analyze?company=${encodeURIComponent(company)}`;
       const es = new EventSource(url);
       esRef.current = es;

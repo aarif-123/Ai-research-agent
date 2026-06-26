@@ -6,7 +6,7 @@ import { buildGraph } from "./agent/graph";
 dotenv.config();
 
 const app = express();
-const PORT = 3001;
+const PORT = Number(process.env.PORT ?? 3001);
 
 app.use(cors({ origin: true, credentials: true }));
 app.use(express.json());
@@ -137,7 +137,7 @@ app.get("/api/analyze", async (req: Request, res: Response) => {
   }
 });
 
-app.listen(PORT, () => {
+app.listen(PORT, "0.0.0.0", () => {
   console.log(`🚀 Investment Agent server running on http://localhost:${PORT}`);
   console.log(`📊 SSE endpoint: GET http://localhost:${PORT}/api/analyze?company=<name>`);
 });
