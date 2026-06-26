@@ -28,7 +28,7 @@ The agent scores the business across 7 core factors (0–100) and applies strict
 *   🔴 **PASS** (Weighted Score $<$ 45, or structural/multiple High-Severity risks) — Highlighted in crimson.
 
 Each verdict includes:
-1.  **Verdict Orb**: An interactive, glowing 3D particle canvas (powered by Three.js) that transitions dynamically in color, speed, and size based on the decision and score.
+1.  **Verdict Orb**: An interactive, glowing orb (powered by CSS radial gradients, keyframe filters, and pulsing borders) that transitions dynamically in color, speed, and size based on the decision and score.
 2.  **Committee Votes**: Consensus breakdown among four simulated specialist personas: Research Agent (Moat), Finance Agent (Fundamentals & Valuation), News Agent (Sentiment), and Risk Agent (Hedging & Macro).
 3.  **Grounded Rationale**: A data-backed justification citing specific P/E ratios, growth trajectories, and competitive dynamics.
 4.  **Portfolio Sizing & Risk Management**: Specific sizing limits (e.g., target percentage of portfolio, suggested stop-losses, and hedging parameters).
@@ -364,7 +364,6 @@ This Markdown file contains the complete conversation history, serving as a comp
     *   [`src/pages/LandingPage.tsx`](file:///c:/Users/Mohmmed%20Aarif/Downloads/iimAssignment/client/src/pages/LandingPage.tsx): High-polish marketing page with interactive preset simulator.
     *   [`src/components/`](file:///c:/Users/Mohmmed%20Aarif/Downloads/iimAssignment/client/src/components):
         *   [`VerdictOrb.tsx`](file:///c:/Users/Mohmmed%20Aarif/Downloads/iimAssignment/client/src/components/VerdictOrb.tsx): Dynamic glowing verdict circle visualization.
-        *   [`ThreeBackground.tsx`](file:///c:/Users/Mohmmed%20Aarif/Downloads/iimAssignment/client/src/components/ThreeBackground.tsx): 3D particle systems for marketing and landing backgrounds.
         *   [`AgentLog.tsx`](file:///c:/Users/Mohmmed%20Aarif/Downloads/iimAssignment/client/src/components/AgentLog.tsx): SSE terminal log feed.
         *   [`ScoreBreakdown.tsx`](file:///c:/Users/Mohmmed%20Aarif/Downloads/iimAssignment/client/src/components/ScoreBreakdown.tsx): Horizontal animated bar charts for the 7 factors.
 *   **[`server/`](file:///c:/Users/Mohmmed%20Aarif/Downloads/iimAssignment/server)**: Node.js + Express backend.
