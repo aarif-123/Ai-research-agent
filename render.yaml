@@ -29,7 +29,6 @@ services:
     name: verity-ai
     runtime: static
     plan: free
-    region: oregon
     branch: main
     autoDeploy: true
     buildCommand: cd client && npm ci && npm run build
