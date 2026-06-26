@@ -15,6 +15,7 @@
 5. [Chat 5 — Hiring Manager Review & Full UI Redesign](#chat-5--hiring-manager-review--full-ui-redesign)
 6. [Chat 6 — SaaS Landing Page Design & Implementation](#chat-6--saas-landing-page-design--implementation)
 7. [Chat 7 — Conversation Log Retrieval](#chat-7--conversation-log-retrieval)
+8. [Chat 8 — Vercel Frontend & Render Backend Deployments](#chat-8--vercel-frontend--render-backend-deployments)
 
 ---
 
@@ -255,6 +256,32 @@ Created this file (`documenationsChats.md`) to capture the full conversation arc
 
 ---
 
+## Chat 8 — Vercel Frontend & Render Backend Deployments
+
+**User Prompts:**
+> *"deploy on vercel"*
+> *"https://verity-ai-api.onrender.com this is backend"*
+> *"guide me how to connect the backend"*
+> *"now add deployment sections"*
+
+**What the AI Did:**
+
+1. **Repaired Backend Compilation**:
+   - Analyzed the Render log error `Cannot find module .../dist/agent/graph` that was triggered after compiling the backend to ES Modules (`"type": "module"`).
+   - Reverted the package module structure in `server/package.json` and updated `server/tsconfig.json` to target **CommonJS** with standard **Node** resolution. This allows Node.js to resolve imports dynamically without requiring `.js` file extensions.
+   - Built and tested the server locally, confirming successful initialization on port 3001. Pushed the fix to the GitHub repository which automatically triggered a successful Render redeployment.
+
+2. **Resolved Public API Endpoint**:
+   - Re-configured `render.yaml` to change `VITE_API_BASE_URL`'s mapping from `property: host` to `property: url`. This ensures Render passes the **public HTTPS address** (`https://verity-ai-api.onrender.com`) to the client during build time, rather than the unresolvable internal host.
+
+3. **Configured Vercel Routing**:
+   - Created `client/vercel.json` to define clean URL parameters and single-page routing rewrites so the React frontend hosts seamlessly on Vercel without breaking client-side routes.
+
+4. **Created Frontend Deployment Instructions**:
+   - Provided a guide for setting up the Vercel project using the Vite framework preset, mapping the root directory to the `client` folder, and binding the backend Render URL to the `VITE_API_BASE_URL` environment variable.
+
+---
+
 ## Summary of Key Project Decisions
 
 | Decision | What Was Chosen | Why |
@@ -265,6 +292,7 @@ Created this file (`documenationsChats.md`) to capture the full conversation arc
 | **Agent State** | LangGraph.js StateGraph | Explicit node boundaries, clean state updates |
 | **Routing** | Hash Routing (`#/app`) | Bulletproof routing on static hosts without server rewrite setups |
 | **Pricing** | Localized INR (₹) | Customized pricing for the Indian market and local CDN low-latency notes |
+| **Hosting & Cloud** | Vercel (Frontend) + Render (Backend) | Vercel delivers high-speed global static pages; Render sustains long-running, state-full SSE stream queries without timeouts |
 
 ---
 
@@ -277,6 +305,7 @@ Created this file (`documenationsChats.md`) to capture the full conversation arc
 | **June 22, 2026** | Refactoring | Overhauled dashboard UI to justify decisions and show tool data |
 | **June 22, 2026** | Landing Page | Built complete SaaS landing page with simulated widget presets |
 | **June 26, 2026** | Audit | Extracted input chat logs and compiled complete project record |
+| **June 26, 2026** | Deployments | Configured CommonJS compilation, added vercel.json, set VITE_API_BASE_URL to public URL, and successfully deployed to Vercel/Render |
 
 ---
 
